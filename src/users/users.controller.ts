@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { Crud, CrudController } from '@nestjsx/crud';
+import { User } from './user.entity';
 
-@Controller('users')
-export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
-
-    @Get()
-    findAll() {
-        return this.usersService.findAll();
+@Crud({
+    model: {
+        type: User,
     }
+})
+@Controller('users')
+export class UsersController implements CrudController<User> {
+    constructor(public service: UsersService) {}
 }
